@@ -1,0 +1,75 @@
+Exercice 5 :
+
+1- gcc -Wall -g hello.c -o hello 
+
+2- valgrind ./hello:
+Rapporte les erreurs ( erreurs de mémoire ). 
+Pas d'erreur dans ce programme.
+
+3- On constate que la mémoire allouée est la même que la mémoire libérée.
+Il n'ya donc pas de fuite de mémoire.
+
+4- 
+gcc -Wall -g mem.c -o mem 
+
+5- L'erreur se trouve a la ligne 6
+On apprend qu'il y a une erreur de segmentation, 1 erreur qui vient d'un 
+contexte. 
+Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+6- Le programme devient :
+//
+#include<stdlib.h>
+#include <stdio.h>
+int main(void)
+{
+  int i,size;
+  int *p;
+  p = (int *) malloc(size*sizeof(int));
+  
+  printf("Entrez un nombre\n");
+  scanf("%d",&size);
+
+  for(i = 0 ; i< size ; i++)
+    p[i] = i ;
+  
+  free(p);
+  
+/*
+  for(i = 0 ; i< size ; i++)
+     sum += p[i]; 
+*/
+  return EXIT_SUCCESS;     
+}
+//
+
+7) Il faut mettre free(p) à la fin du programme.
+
+8) Valgrind révèle une erreur de fuite de mémoire.
+
+9) D'aprés valgrind, la ligne fautive est la 11.
+La commande était :
+valgrind --leak-check=full ./mem3
+
+10) Le programme devient 
+//
+#include<stdlib.h>
+#include <stdio.h>
+int main(void)
+{
+  int i,size;
+  int **p;
+  
+  printf("Entrez un nombre\n");
+  scanf("%d",&size);
+  
+  p = (int **)malloc(size * sizeof(int *));
+  for(i = 0 ; i < size ; i++)
+    p[i] =  (int *)malloc(size * sizeof(int));
+
+  for( i = 0 ; i < size ; i++)
+    free(p[i]);
+  free(p);
+  return EXIT_SUCCESS;     
+}
+//

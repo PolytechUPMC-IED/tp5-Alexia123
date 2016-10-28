@@ -1,0 +1,96 @@
+Exercice 1 :
+
+2) Un répertoire .git/ a été créé.
+
+4) La commande git status nous renvoie le message suivant :
+//
+Sur la branche master
+
+Validation initiale
+
+Fichiers non suivis:
+  (utilisez "git add <fichier>..." pour inclure dans ce qui sera validé)
+
+	fichier
+
+aucune modification ajoutée à la validation mais des fichiers non suivis sont 
+présents (utilisez "git add" pour les suivre)
+//
+Ce message nous indique sur quelle branche nous nous trouvons et liste les
+fichiers non suivis, ie, ceux qui n'ont pas été indexés.
+
+5) Cette commande permet de changer le statut du fichier : il s'agit maintenant
+d'un fichier suivi.
+
+6) Le message affiché est :
+[master (commit racine) 5d47a07] Un superMessage
+ 1 file changed, 1 insertion(+)
+ create mode 100644 fichier
+
+7) La copie de travail est propre, toutes les modifications ont été effectuées.
+
+8) La commande nous donne des informations diverses telles que l'auteur du 
+fichier suivi, la date de dernière modification, son contenu, l'index.
+
+9) git diff nous donne toutes les modifications effectuées.
+
+Exercice 2 :
+
+1) Les commandes nous renvoie la liste des branches.
+
+3) On passe sur la nouvelle branche grâce à la commande " git checkout test".
+Puis la commande "touch file2" crée le fichier.
+On ajoute le fichier à la branche test grâce à la commande "git add file2".
+La drnière commande est "git commit -m file2".
+
+4) La commande affiche :
+* 5d47a07 (HEAD, test, master) Un superMessage
+Head est la racine et (test,master) sont les branches.
+
+5)Les commandes nous permettent de transferer tout le contenu de la branche " test" vers la branche "master" .
+
+6) Après avoir modifié une ligne du fichier, on entre les commandes suivantes :
+git add fichier
+git checkout test
+On modifie de nouveau le fichier, puis :
+git add fichier
+git checkout master
+git merge test
+
+Le merge donne le message :
+"Already up-to-date."
+
+8) La commande supprime bien la branche test.
+
+Exercice 3 :
+
+3) git clone https://github.com/PolytechUPMC-IED/tp5-Alexia123.git
+Cette commande permet de cloner le répertoire.
+
+Exercice 4 :
+
+1) CC représente gcc.
+CFLAGS représene -03 -Wall -funroll-loops.
+LDLIBS représente -lpng.
+
+COMPILE = $(CC) $(CFLAGS) $@
+
+all: $(PROGRAMS)
+
+pbm2png: pbm2png.c
+	 $(COMPILE) -s -o $(LDLIBS) pbm2png.c
+
+pbm2eps9: pbm2eps9.c
+	  $(COMPILE) -c -o pbm2eps9.c
+
+printer: printer.c
+	 $(COMPILE) -c -o printer.c
+
+pbm2eps9: pbm2eps9.o printer.o
+	  $(CC) -s -o pbm2eps9.o printer.o
+
+2) Voir le Makefile.
+
+3)
+%.o:%.c
+	$(COMPILE) -c $< -o $@
